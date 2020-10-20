@@ -1,0 +1,26 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+main {
+}
+
+.letterListUL {
+	list-style: none;
+	display: flex;
+}
+
+.letter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150px;
+	width: 150px;
+	font-size: 50px;
+	border: 1px solid brown;
+}
+
+.invisible {
+	visibility: hidden;
+}
