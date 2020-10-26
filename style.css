@@ -1,9 +1,59 @@
+@font-face {
+	font-family: Pacifico;
+	src: url("fonts/Pacifico/Pacifico-Regular.ttf");
+}
+
 body {
 	margin: 0;
 	padding: 0;
+	background-color: darkcyan;
 }
 
 main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+}
+h1,
+h2 {
+	margin: 0;
+	padding: 0;
+	font-family: Pacifico, sans-serif;
+}
+
+h1 {
+	color: rgb(98, 36, 88);
+}
+h2 {
+	color: rgb(152, 73, 155);
+	font-weight: 200;
+}
+.alphabets {
+	display: flex;
+	justify-content: center;
+}
+.alphabet {
+	border: 1px solid black;
+	padding: 2px;
+	margin: 2px;
+	width: 20px;
+	text-align: center;
+}
+.strike {
+	text-decoration: line-through;
+	color: rgb(98, 36, 88);
+	border: 1px solid rgb(98, 36, 88);
+}
+
+li {
+	list-style-type: none;
+}
+
+.guessWord {
+	display: flex;
+	justify-content: center;
 }
 
 .letterListUL {
@@ -18,9 +68,18 @@ main {
 	height: 150px;
 	width: 150px;
 	font-size: 50px;
-	border: 1px solid brown;
+	border: 1px solid darkred;
+	margin: 3px;
 }
 
 .invisible {
 	visibility: hidden;
+}
+
+.result {
+	display: flex;
+	justify-content: center;
+	font-size: xx-large;
+	font-family: Pacifico, Verdana, sans-serif;
+	color: rgb(98, 36, 88);
 }
