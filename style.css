@@ -6,15 +6,19 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-color: darkcyan;
+	background-color: #11c0c0;
 }
 
-main {
+.triangle-ltop {
+	width: 0;
+	height: 0;
+	border-left: 0px solid transparent;
+	border-right: 55px solid transparent;
+	border-top: 80px solid rgb(98, 36, 88);
+}
+
+header {
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	margin: 0;
-	padding: 0;
 }
 h1,
 h2 {
@@ -30,8 +34,18 @@ h2 {
 	color: rgb(152, 73, 155);
 	font-weight: 200;
 }
+main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+}
+
 .alphabets {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 }
 .alphabet {
@@ -39,6 +53,7 @@ h2 {
 	padding: 2px;
 	margin: 2px;
 	width: 20px;
+	height: 20px;
 	text-align: center;
 }
 .strike {
@@ -54,20 +69,25 @@ li {
 .guessWord {
 	display: flex;
 	justify-content: center;
+	width: 80%;
+	margin: 0;
 }
 
 .letterListUL {
 	list-style: none;
 	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
 }
 
 .letter {
 	display: flex;
+
 	justify-content: center;
 	align-items: center;
-	height: 150px;
-	width: 150px;
-	font-size: 50px;
+	height: 80px;
+	width: 80px;
+	font-size: 40px;
 	border: 1px solid darkred;
 	margin: 3px;
 }
@@ -76,10 +96,63 @@ li {
 	visibility: hidden;
 }
 
+.triesContainer {
+	font-family: Pacifico, sans-serif;
+	font-size: 30px;
+	margin: 0;
+}
+
+.tries {
+	font-size: 50px;
+	font-family: Pacifico, sans-serif;
+}
+
 .result {
+	margin: 5px;
 	display: flex;
 	justify-content: center;
-	font-size: xx-large;
 	font-family: Pacifico, Verdana, sans-serif;
 	color: rgb(98, 36, 88);
+}
+
+.button {
+	border-radius: 10px;
+	font-family: Pacifico, Verdana, sans-serif;
+	background-color: rgb(98, 36, 88);
+	color: #11c0c0;
+	margin: 0;
+}
+
+@media only screen and (min-width: 768px) {
+	.alphabet {
+		border: 1px solid black;
+		padding: 2px;
+		margin: 2px;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+	}
+
+	.guessWord {
+		width: 100%;
+	}
+	.letter {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 120px;
+		width: 120px;
+		font-size: 50px;
+		border: 1px solid darkred;
+		margin: 3px;
+	}
+
+	.result {
+		margin: 5px;
+		display: flex;
+		justify-content: center;
+		font-size: xx-large;
+		font-family: Pacifico, Verdana, sans-serif;
+		color: rgb(98, 36, 88);
+	}
 }

@@ -1,8 +1,9 @@
-
 "use strict";
+// alphabet container
+let alphabets = document.querySelector(".alphabets");
+let showWordButton = document.querySelector(".showWord");
 
-let alphabets = document.querySelector(".alphabets")
-
+// layout the alphabets
 for (let i = 65; i < 91; i++ ) {
     var li = document.createElement("li");
     li.innerHTML = String.fromCharCode( i );
@@ -10,96 +11,115 @@ for (let i = 65; i < 91; i++ ) {
     li.classList.add("alphabet");
     alphabets.appendChild(li);
 }
-
- const wordArray = ["Frisbee", "Script", "Project"];
+// list of random words
+ const wordArray = ["Acoustic", "Frisbee", "Script", "Project", "Tripped", "Tryout" ,"Zealous" , "Fragile" ,"Agnostic", "Guitar"];
 
  function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
 
- let random = getRandomInt(wordArray.length)
+ let random = getRandomInt(wordArray.length);
+
  console.log(`random: ${random}`);
  const guessWord = wordArray[random].toUpperCase();
- let tries = Math.ceil(guessWord.length/2);
+ // setting the number of tries = half of the length of the word
+ let tries = Math.ceil(guessWord.length/2) + 1;
  console.log(`tries: ${tries}`);
- let guessWordCodesArray =   [];
+ document.querySelector(".tries").innerHTML = tries;
+//  let guessWordCodesArray =   [];
  let gWordContainer = document.querySelector(".guessWord");
  let letterList = document.createElement("ul");
  letterList.classList.add("letterListUL");
+
+let guessWordCodesMap = new Map();
 
  for(let i=0; i < guessWord.length; i++){
     
     let letter = document.createElement("li");
     letter.classList.add("letter");
     let letterSpan = document.createElement("span");
-    //letterSpan.classList.add("invisible");
-    letterSpan.setAttribute("data-code", guessWord[i].charCodeAt(0));
-    
-    if(guessWordCodesArray.indexOf(guessWord[i].charCodeAt(0)) == -1){
-        guessWordCodesArray.push(guessWord[i].charCodeAt(0));
-    }
-   
+    letterSpan.setAttribute("data-code", i);
     letter.appendChild(letterSpan);
     letterList.appendChild(letter);
+
+    guessWordCodesMap.set(i, guessWord[i]);
  }
  
+ console.log(guessWordCodesMap);
 
  gWordContainer.appendChild(letterList);
- 
+
 // Mouse click handler
 function checkMouseClick(e){
-    const letterIn = e.target.innerHTML.charCodeAt(0);
-    if(letterIn >= 65 && letterIn <= 90)
-    {
-        checkLetter(letterIn);
-    }
-
+    checkLetterInMap(e.target.innerHTML);
 }
 
  // Keyboard Key down Handler 
  function checkKeyboardInput(e) {
-     console.log(e);
-    const keyIn = e.keyCode;
-    if(keyIn >= 65 && keyIn <= 90)
-    {
-        checkLetter(keyIn);
+    console.log(e);
+    checkLetterInMap(e.key.toUpperCase());
+ }
+
+ function checkLetterInMap(charInput){
+    let isFound = false;
+    console.log("checkLetterInMap ");
+    for(let[index, char] of guessWordCodesMap.entries()){
+        if(char === charInput){
+            isFound = true;
+            document.querySelector(`[data-code="${index}"]`).innerHTML = char;
+            guessWordCodesMap.delete(index);
+        }
+    }
+    let letter = document.querySelector(`.${charInput}`);
+    // console.log(letter);
+    letter.classList.add("strike");
+
+    if(!isFound){ 
+        tries--;
+        document.querySelector(".tries").innerHTML = tries;
+    }
+
+    if(tries == 0){ // error : No tries left.
+        alphabets.removeEventListener('click', checkMouseClick);
+        document.removeEventListener('keydown', checkKeyboardInput);
+
+        let errorDiv = document.querySelectorAll(".error");
+        errorDiv.forEach(e => e.classList.remove("invisible"));
+
+        let resultDiv = document.querySelectorAll(".result");
+        resultDiv.forEach(d => d.remove());
+        document.querySelector(".play").classList.remove("invisible");
+        document.querySelector(".playAgain").addEventListener("click", playAgain);
+    }
+    
+    if(guessWordCodesMap.size == 0){ // success
+        alphabets.removeEventListener('click', checkMouseClick);
+        document.removeEventListener('keydown', checkKeyboardInput);
+
+        let resultDiv = document.querySelectorAll(".result");
+        resultDiv.forEach(e => e.classList.remove("invisible"));
+        document.querySelector(".triesContainer").remove();
+        document.querySelector(".play").classList.remove("invisible");
+        document.querySelector(".playAgain").addEventListener("click", playAgain);
+
+    }
+ }
+
+ function showWord () {
+    for(let[index, char] of guessWordCodesMap.entries()){
+            document.querySelector(`[data-code="${index}"]`).innerHTML = char;
     }
 
  }
 
-
- function checkLetter(keyClicked) {
-    let matchElements = document.querySelectorAll(`[data-code="${keyClicked}"]`);
-
-    matchElements.forEach((item) => item.innerHTML = String.fromCharCode(keyClicked));
-    
-    if(guessWordCodesArray.indexOf(keyClicked) != -1){
-        guessWordCodesArray.splice(guessWordCodesArray.indexOf(keyClicked),1);
-    }else{
-        tries--;
-    }
-
-    let letter = document.querySelector(`.${String.fromCharCode(keyClicked).toUpperCase()}`);
-    // console.log(letter);
-    letter.classList.add("strike");
-
-    if(tries == 0){
-        document.removeEventListener('keydown', checkLetter);
-        let errorDiv = document.querySelectorAll(".error");
-        errorDiv.forEach(e => e.classList.remove("invisible"));
-    }
-    
-    if(guessWordCodesArray.length == 0){
-        document.removeEventListener('keydown', checkLetter);
-        let resultDiv = document.querySelectorAll(".result");
-        resultDiv.forEach(e => e.classList.remove("invisible"));
-    }
-
+ function playAgain(){
+     location.reload();
  }
 
  // mouse listener
 alphabets.addEventListener('click', checkMouseClick);
 
-
 // keyboard listener
 document.addEventListener('keydown', checkKeyboardInput);
+
+showWordButton.addEventListener('click', showWord);
