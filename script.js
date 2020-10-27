@@ -12,7 +12,11 @@ for (let i = 65; i < 91; i++ ) {
     alphabets.appendChild(li);
 }
 // list of random words
- const wordArray = ["Acoustic", "Frisbee", "Script", "Project", "Tripped", "Tryout" ,"Zealous" , "Fragile" ,"Agnostic", "Guitar"];
+ const wordArray = ["Acoustic", "Frisbee", "Script", "Project", "Tripped", 
+ "Tryout" ,"Zealous" , "Fragile" ,"Agnostic", "Guitar", "Bought", "Cradle", 
+ "Dungeon", "Elephant", "Hideout", "Igneous", "Kindness", "Empathy", 
+ "Jeopardy", "Liquid", "Magician", "Nation", "Orangutans","Quality", "Roaster", 
+ "Sidewalk", "Umbrella", "Vigilant", "Watchful", "Xylograph","Youngest"];
 
  function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -20,11 +24,11 @@ for (let i = 65; i < 91; i++ ) {
 
  let random = getRandomInt(wordArray.length);
 
- console.log(`random: ${random}`);
+ //console.log(`random: ${random}`);
  const guessWord = wordArray[random].toUpperCase();
  // setting the number of tries = half of the length of the word
  let tries = Math.ceil(guessWord.length/2) + 1;
- console.log(`tries: ${tries}`);
+ //onsole.log(`tries: ${tries}`);
  document.querySelector(".tries").innerHTML = tries;
 //  let guessWordCodesArray =   [];
  let gWordContainer = document.querySelector(".guessWord");
@@ -45,7 +49,7 @@ let guessWordCodesMap = new Map();
     guessWordCodesMap.set(i, guessWord[i]);
  }
  
- console.log(guessWordCodesMap);
+ //console.log(guessWordCodesMap);
 
  gWordContainer.appendChild(letterList);
 
@@ -56,7 +60,7 @@ function checkMouseClick(e){
 
  // Keyboard Key down Handler 
  function checkKeyboardInput(e) {
-    console.log(e);
+    //console.log(e);
     checkLetterInMap(e.key.toUpperCase());
  }
 
@@ -71,7 +75,7 @@ function checkMouseClick(e){
         }
     }
     let letter = document.querySelector(`.${charInput}`);
-    // console.log(letter);
+    
     letter.classList.add("strike");
 
     if(!isFound){ 
